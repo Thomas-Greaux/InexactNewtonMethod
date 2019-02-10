@@ -30,7 +30,7 @@ def help_hessian(j):
   for i in range(dimension):
     value = 0.0
     if i==j:
-      value = 2.0/1.0/((i+1.0)**2)
+      value = 2.0*(1.0/((i+1.0)**2))
     res = np.append(res, value)
   return res
 
