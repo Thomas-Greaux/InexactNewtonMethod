@@ -1,6 +1,6 @@
 import numpy as np
 
-A = np.array([[],[]])
+A = np.array([[]])
 b = np.array([])
 
 def gradient(x):
@@ -13,7 +13,8 @@ def gradient(x):
 def A_inner_product(X, Y):
     '''
     This function returns the inner produxt defined by
-    the positive definite matrix A
+    the positive definite matrix A, 
+    i.e. <X, Y>A = X.T * A * Y
     '''
     return np.dot(np.dot(X.T, A), Y)
 
@@ -40,24 +41,9 @@ def conjugate_gradient(x, A_ext, b_ext):
     b = b_ext
 
     xt = x
-    print(xt)
-    p = [gradient(x)]
+    p = gradient(x)
     d = xt.size
     for i in range(1, d):
-        grad_xt = gradient(xt)
-        xt = xt - np.inner(grad_xt, p[i-1]) * p[i-1] / A_inner_product(p[i-1], p[i-1])
-        p.append(A_orthogonal_set(grad_xt, p[i-1]))
+        xt = xt - np.inner(gradient(xt), p) * p / A_inner_product(p, p)
+        p = A_orthogonal_set(gradient(xt), p)
     return xt
-
-#A = np.array(
-#    [[2, 0],
-#     [0, 2]]
-#)
-
-#b = np.array([4, -2])
-
-if __name__=="__main__":
-    x = np.array([-14, -2])
-    x_star = conjugate_gradient(x)
-    print("x = ", x)
-    print("x* = ", x_star)
