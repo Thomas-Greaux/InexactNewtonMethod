@@ -26,7 +26,7 @@ def A_orthogonal_set(grad_xt, pt):
     '''
     return grad_xt - A_inner_product(grad_xt, pt) * pt / A_inner_product(pt, pt)
 
-def conjugate_gradient(x, A_ext, b_ext):
+def conjugate_gradient(x, A_ext, b_ext, i):
     '''
     This function returns the exact minimum of
     f(x) = 1/2 * x.T A x - b.T x,
@@ -34,6 +34,8 @@ def conjugate_gradient(x, A_ext, b_ext):
     with the conjugate gradient method, 
     starting from x
     with A = nabla^2 F and b = - nabla F
+
+    we can obtain the exact result in d steps, but allow to do only i <= d steps
     '''
     global A
     global b
@@ -42,8 +44,8 @@ def conjugate_gradient(x, A_ext, b_ext):
 
     xt = x
     p = gradient(x)
-    d = xt.size
-    for i in range(1, d):
+    #d = xt.size
+    for k in range(1, i):
         xt = xt - np.inner(gradient(xt), p) * p / A_inner_product(p, p)
         p = A_orthogonal_set(gradient(xt), p)
     return xt
