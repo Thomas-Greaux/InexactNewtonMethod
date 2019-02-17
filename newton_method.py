@@ -22,8 +22,8 @@ This block is the parsing of arguments
 import argparse
 
 parser = argparse.ArgumentParser(description="Execute the inexact newton method using the conjugate gradient method")
-parser.add_argument("--maxd", type=int, metavar="", default=18, help="The maximum dimension of the function")
-parser.add_argument("--increment", type=int, metavar="", default=2, help="The increment of the number of steps in the conjugate gradient method")
+parser.add_argument("-m", "--maxd", type=int, metavar="", default=18, help="The maximum dimension of the function")
+parser.add_argument("-i", "--increment", type=int, metavar="", default=2, help="The increment of the number of steps in the conjugate gradient method")
 parser.add_argument("-e", "--epsilon", type=float, metavar="", default=0.01, help="Epsilon, the precision demanded")
 parser.add_argument("-a", "--alpha", type=float, metavar="", default=0.005, help="Alpha, the learning rate")
 
