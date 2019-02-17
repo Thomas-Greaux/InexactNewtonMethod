@@ -27,7 +27,7 @@ def alpha(k):
     '''
     returns the hyper parameter alpha, the learning rate
     '''
-    return 0.001
+    return 0.005
 
 def inexact_newton(w, i):
     '''
@@ -47,10 +47,12 @@ def inexact_newton(w, i):
 This block is the program,
 is increases the dimension and number of steps for the conjugate gradient.
 '''
-for d in range(2, 22, 2):
+max_d = 18
+increment = 2
+for d in range(2, max_d+1, increment):
     func.set_dimension(d)
     x0 = func.generate_x0()
-    for i in range(2, d+1, 2):
+    for i in range(2, d+1, increment):
         steps = inexact_newton(x0, i)
         print("#steps at dimension " + str(d) + " and conjugate " + str(i) + " = " + str(steps))
     print("")
