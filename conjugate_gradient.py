@@ -1,3 +1,8 @@
+'''
+This file's purpose is to do
+the conjugate gradient method
+'''
+
 import numpy as np
 
 A = np.array([[]])
@@ -14,7 +19,7 @@ def A_inner_product(X, Y):
     '''
     This function returns the inner produxt defined by
     the positive definite matrix A, 
-    i.e. <X, Y>A = X.T * A * Y
+    i.e. <X, Y>_A = X.T * A * Y
     '''
     return np.dot(np.dot(X.T, A), Y)
 
@@ -22,20 +27,18 @@ def A_orthogonal_set(grad_xt, pt):
     '''
     This function returns the next vector p
     A-orthogonal to all the previous p
-    based on equation 2.22 of Bubeck
+    based on equation 2.22 of Bubeck (section 2.4)
     '''
     return grad_xt - A_inner_product(grad_xt, pt) * pt / A_inner_product(pt, pt)
 
 def conjugate_gradient(x, A_ext, b_ext, i):
     '''
-    This function returns the exact minimum of
+    This function returns the minimum of
     f(x) = 1/2 * x.T A x - b.T x,
     which is equivalent of solving Ax = b, 
     with the conjugate gradient method, 
-    starting from x
-    with A = nabla^2 F and b = - nabla F
-
-    we can obtain the exact result in d steps, but allow to do only i <= d steps
+    starting at x, and doing it for i steps.
+    For i = d, the dimension of x, it returns the exact minimum.
     '''
     global A
     global b
@@ -44,7 +47,6 @@ def conjugate_gradient(x, A_ext, b_ext, i):
 
     xt = x
     p = gradient(x)
-    #d = xt.size
     for k in range(1, i):
         xt = xt - np.inner(gradient(xt), p) * p / A_inner_product(p, p)
         p = A_orthogonal_set(gradient(xt), p)
